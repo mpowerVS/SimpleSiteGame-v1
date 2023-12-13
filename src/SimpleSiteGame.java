@@ -1,28 +1,25 @@
 public class SimpleSiteGame {
+    public static void main(String[] args) {
+        int numOfGuesses = 0;
+        GameHelper helper = new GameHelper();
 
-    int[] locationCells;
-    int numOfHits = 0;
+        SimpleSite game = new SimpleSite();
 
-    public void setLocationCells(int[] locs){
-        locationCells = locs;
-    }
-    public String check(String userGuess){
-        int guess = Integer.parseInt(userGuess);
-        String result = "MISS";
+        int randomNumber = (int) (Math.random()*4 + 1);
+        int[] locations = {randomNumber, randomNumber+1, randomNumber+2};
+        game.setLocationCells(locations);
 
-        for(int cell : locationCells){
-            if(guess == cell){
-                result = "HIT";
-                numOfHits++;
-                //numOfTotalHits++;
-                break;
+        boolean isAlive = true;
+        while(isAlive == true){
+            String guess = helper.getUserInput("Enter the number");
+            String result = game.check(guess);
+            numOfGuesses++;
+            if(result.equals("SITE is DOWN!")){
+                isAlive = false;
+                double luck = 3.0/numOfGuesses*100;
+                String nValue = (String) String.format("%.2f", luck);
+                System.out.println("You used " + numOfGuesses + " tries to finish site! Your luck is " + nValue +"%");
             }
         }
-
-        if(numOfHits == locationCells.length)
-            result = "SITE is DOWN!";
-
-        System.out.println(result);
-        return result;
     }
 }
