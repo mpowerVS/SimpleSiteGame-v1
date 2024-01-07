@@ -1,24 +1,24 @@
-public class SimpleSite {
-    int[] locationCells;
-    int numOfHits = 0;
+import java.util.ArrayList;
 
-    public void setLocationCells(int[] locs){
+public class SimpleSite {
+    private ArrayList<String> locationCells;
+    //int numOfHits = 0;
+
+    public void setLocationCells(ArrayList<String> locs){
         locationCells = locs;
     }
     public String check(String userGuess){
         int guess = Integer.parseInt(userGuess);
         String result = "MISS";
 
-        for(int cell : locationCells){
-            if(guess == cell){
-                result = "HIT";
-                numOfHits++;
-                break;
-            }
+        int index = locationCells.indexOf(userGuess);
+        if (index >= 0){
+            locationCells.remove(index);
+            if (locationCells.isEmpty())
+                result = "SITE is DOWN!";
+            else
+                result = "HIT!";
         }
-
-        if(numOfHits == locationCells.length)
-            result = "SITE is DOWN!";
 
         System.out.println(result);
         return result;
